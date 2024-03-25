@@ -10,7 +10,7 @@ BATCH_SIZE = 20
 IMAGE_SIZE = (300,200)
 
 # Load data from the CSV file
-dataframe = pd.read_csv('C:\\Users\\Poommipat\\Desktop\\ComVision\\shuffled_fried_noodles_dataset_normalized.csv')
+dataframe = pd.read_csv('/home/visionpro2/shuffled_fried_noodles_dataset_normalized.csv')
 
 # Data augmentation
 datagen = ImageDataGenerator(
@@ -27,7 +27,7 @@ datagen = ImageDataGenerator(
 # Create data generators for training, validation, and testing
 train_generator = datagen.flow_from_dataframe(
     dataframe=dataframe.loc[:1599],
-    directory='C:\\Users\\Poommipat\\Desktop\\ComVision\\images',
+    directory='/home/visionpro2/images',
     x_col='filename',
     y_col=['norm_meat', 'norm_veggie', 'norm_noodle'],
     shuffle=True,
@@ -37,7 +37,7 @@ train_generator = datagen.flow_from_dataframe(
 
 validation_generator = datagen.flow_from_dataframe(
     dataframe=dataframe.loc[1600:1699],
-    directory='C:\\Users\\Poommipat\\Desktop\\ComVision\\images',
+    directory='/home/visionpro2/images',
     x_col='filename',
     y_col=['norm_meat', 'norm_veggie', 'norm_noodle'],
     shuffle=True,
@@ -47,7 +47,7 @@ validation_generator = datagen.flow_from_dataframe(
 
 test_generator = datagen.flow_from_dataframe(
     dataframe=dataframe.loc[1700:],
-    directory='C:\\Users\\Poommipat\\Desktop\\ComVision\\images',
+    directory='/home/visionpro2/images',
     x_col='filename',
     y_col=['norm_meat', 'norm_veggie', 'norm_noodle'],
     shuffle=True,
@@ -102,7 +102,7 @@ class PlotLosses(Callback):
         plt.pause(0.01)
 
 # ModelCheckpoint callback to save the best model
-checkpoint = ModelCheckpoint('C:\\Users\\Poommipat\\Desktop\\ComVision\\contest_final2.h5', verbose=1, monitor='val_mean_absolute_error', save_best_only=True, mode='min')
+checkpoint = ModelCheckpoint('/home/visionpro2/contest_final2.h5', verbose=1, monitor='val_mean_absolute_error', save_best_only=True, mode='min')
 plot_losses = PlotLosses()
 
 # Train the model
@@ -115,7 +115,7 @@ model.fit(
     callbacks=[checkpoint, plot_losses])
 
 # Evaluate the model on the test set
-model = load_model('C:\\Users\\Poommipat\\Desktop\\ComVision\\contest_final2.h5')
+model = load_model('/home/visionpro2/contest_final2.h5')
 score = model.evaluate_generator(
     test_generator,
     steps=len(test_generator))
